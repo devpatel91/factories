@@ -11,7 +11,7 @@ juke.factory('PlayerFactory', function($http, $rootScope) {
         currentSong, currentIndex, playlist, currentTime, progress = 0;
 
     audio.addEventListener('timeupdate', function() {
-        progress = audio.currentTime / audio.duration;
+        progress = 100 * audio.currentTime / audio.duration;
         $rootScope.$evalAsync();
     });
     var retObj = {
@@ -72,7 +72,6 @@ juke.factory('PlayerFactory', function($http, $rootScope) {
         },
 
         getProgress: function() {
-            console.log(progress);
             return progress;
         }
 
