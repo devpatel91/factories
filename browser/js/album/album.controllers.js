@@ -1,7 +1,7 @@
 /* global juke */
 'use strict';
 
-<<<<<<< HEAD
+
 juke.factory('StatsFactory', function ($q) {
   var statsObj = {};
   statsObj.totalTime = function (album) {
@@ -22,10 +22,21 @@ juke.factory('StatsFactory', function ($q) {
   };
   return statsObj;
 });
-=======
 
+juke.controller('Albums',function($scope,AlbumFactory){
 
->>>>>>> be2f445106f90a22e32d0feba371b0d0fdf6c8ea
+   AlbumFactory.fetchAll()
+  .then(function(albums){
+    console.log(albums)
+    $scope.albums = albums.data;
+  });
+
+  AlbumFactory.fetchById(2)
+  .then(function(album){
+    console.log(album.data);
+  })
+})
+
 
 juke.controller('AlbumCtrl', function ($scope, $http, $rootScope, $log, AlbumFactory, StatsFactory) {
   // load our initial data
@@ -88,37 +99,8 @@ juke.controller('AlbumCtrl', function ($scope, $http, $rootScope, $log, AlbumFac
   function next () { skip(1); }
   function prev () { skip(-1); }
 
-  AlbumFactory.fetchAll()
-  .then(function(albums){
-    $scope.albums = albums.data;
-  });
-
-  AlbumFactory.fetchById(2)
-  .then(function(album){
-    console.log(album.data);
-  })
+ 
 });
 
-<<<<<<< HEAD
-=======
-juke.factory('StatsFactory', function ($q) {
-  var statsObj = {};
-  statsObj.totalTime = function (album) {
-    var audio = document.createElement('audio');
-    return $q(function (resolve, reject) {
-      var sum = 0;
-      var n = 0;
-      function resolveOrRecur () {
-        if (n >= album.songs.length) resolve(sum);
-        else audio.src = album.songs[n++].audioUrl;
-      }
-      audio.addEventListener('loadedmetadata', function () {
-        sum += audio.duration;
-        resolveOrRecur();
-      });
-      resolveOrRecur();
-    });
-  };
-  return statsObj;
->>>>>>> be2f445106f90a22e32d0feba371b0d0fdf6c8ea
+
 
