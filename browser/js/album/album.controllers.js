@@ -99,10 +99,10 @@ juke.controller('AlbumCtrl', function ($scope, $http, $rootScope, $log, AlbumFac
   function prev () { skip(-1); }
 
 $scope.playing = function(){
-  return PlayerFactory.songPlaying;
+  return PlayerFactory.isPlaying();
 }
 $scope.currentSong = function(){
-  return PlayerFactory.currentSong;
+  return PlayerFactory.getCurrentSong();
 }
  $scope.play = function(song,songList){
    // $scope.playing() = true;
@@ -112,19 +112,19 @@ $scope.currentSong = function(){
     // $scope.currentSong = song;
   return PlayerFactory.start(song,songList);
   }
-  
+
  }
 
  $scope.pause = function(){
+  console.log('here');
   // $scope.playing() = false;
   return PlayerFactory.pause();
  }
 
   $scope.toggle = function (song,songList) {
-  PlayerFactory.playlist = songList;
-
+    PlayerFactory.playlist = songList;
+    console.log('playing', $scope.playing());
     if ($scope.playing() && song === $scope.currentSong()) {
-
       return $scope.pause();
     } else {
 

@@ -90,8 +90,8 @@
             <button class="btn btn-default" ng-click="prev()">
               <span class="glyphicon glyphicon-step-backward"></span>
             </button>
-            <button class="btn btn-default" ng-click="toggle(currentSong)">
-              <span class="glyphicon" ng-class="{'glyphicon-pause': playing && currentSong === currentSong, 'glyphicon-play': !playing || currentSong !== currentSong}"></span>
+            <button class="btn btn-default" ng-click="toggle(currentSong())">
+              <span class="glyphicon" ng-class="{'glyphicon-pause': playing(), 'glyphicon-play': !playing() }"></span>
             </button>
             <button class="btn btn-default" ng-click="next()">
               <span class="glyphicon glyphicon-step-forward"></span>

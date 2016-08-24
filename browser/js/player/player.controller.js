@@ -31,10 +31,10 @@ juke.controller('PlayerCtrl', function($scope, $rootScope, PlayerFactory) {
     // $scope.$on('play', PlayerFactory.start);
 
     // functionality
-    function pause() {
-        audio.pause();
-        $scope.playing = false;
-    }
+    // function pause() {
+    //     audio.pause();
+    //     $scope.playing = false;
+    // }
 
     // function play (event, song){
     //   // stop existing audio (e.g. other song) in any case
@@ -66,26 +66,26 @@ juke.controller('PlayerCtrl', function($scope, $rootScope, PlayerFactory) {
     $scope.currentSong = PlayerFactory.getCurrentSong;
 
     $scope.play = function(song,songList) {
-     
 
 
-        $scope.playing = true;
-        if ($scope.currentSong === song) {
+
+        //$scope.playing = true;
+        if ($scope.currentSong() === song) {
             return PlayerFactory.resume();
         } else {
-            $scope.currentSong = song;
+            //$scope.currentSong() = song;
             return PlayerFactory.start(song);
         }
 
     }
 
     $scope.pause = function() {
-        $scope.playing = false;
+        //$scope.playing = false;
         return PlayerFactory.pause();
     }
     $scope.toggle = function (song) {
-  
-    if ($scope.playing && song === $scope.currentSong) {
+
+    if ($scope.playing() && song === $scope.currentSong()) {
 
       return $scope.pause();
     } else {
@@ -93,7 +93,7 @@ juke.controller('PlayerCtrl', function($scope, $rootScope, PlayerFactory) {
       return $scope.play(song);
     }
   };
-    
+
     $scope.next = function(){
       return PlayerFactory.next();
    }
