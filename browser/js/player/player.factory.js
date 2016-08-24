@@ -19,10 +19,10 @@ juke.factory('PlayerFactory', function($http, $rootScope) {
             if (songPlaying) {
                 this.pause();
             }
+            songPlaying = true;
             audio.src = song.audioUrl;
             audio.load();
             audio.play();
-            songPlaying = true;
             currentSong = song;
             if (songList){
                 playlist = songList;
@@ -32,8 +32,8 @@ juke.factory('PlayerFactory', function($http, $rootScope) {
 
         },
         pause: function() {
-            audio.pause();
             songPlaying = false;
+            audio.pause();
         },
         resume: function(){
         	audio.play();
