@@ -38,7 +38,7 @@ juke.controller('Albums',function($scope,AlbumFactory){
 })
 
 
-juke.controller('AlbumCtrl', function ($scope, $http, $rootScope, $log, AlbumFactory, StatsFactory) {
+juke.controller('AlbumCtrl', function ($scope, $http, $rootScope, $log, AlbumFactory, StatsFactory, PlayerFactory) {
   // load our initial data
   $http.get('/api/albums/')
   .then(function (res) { return res.data; })
@@ -99,7 +99,7 @@ juke.controller('AlbumCtrl', function ($scope, $http, $rootScope, $log, AlbumFac
   function next () { skip(1); }
   function prev () { skip(-1); }
 
- 
+
 });
 
 
