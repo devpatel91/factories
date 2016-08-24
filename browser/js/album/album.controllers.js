@@ -1,13 +1,7 @@
 /* global juke */
 'use strict';
 
-<<<<<<< HEAD
-juke.controller('AlbumsController', function($scope, AlbumFactory){
-  console.log('here');
-})
-=======
-juke.controller('AlbumCtrl', function ($scope, $http, $rootScope, $log,StatsFactory) {
->>>>>>> e1c137144f95c70cf79a9f4107a740af39eef604
+
 
 
 juke.controller('AlbumCtrl', function ($scope, $http, $rootScope, $log, AlbumFactory) {
@@ -82,8 +76,6 @@ juke.controller('AlbumCtrl', function ($scope, $http, $rootScope, $log, AlbumFac
   })
 });
 
-<<<<<<< HEAD
-=======
 juke.factory('StatsFactory', function ($q) {
   var statsObj = {};
   statsObj.totalTime = function (album) {
@@ -103,5 +95,4 @@ juke.factory('StatsFactory', function ($q) {
     });
   };
   return statsObj;
-});
->>>>>>> e1c137144f95c70cf79a9f4107a740af39eef604
+
