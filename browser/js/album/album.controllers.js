@@ -1,16 +1,28 @@
 /* global juke */
 'use strict';
 
-<<<<<<< HEAD
-juke.controller('AlbumsController', function($scope, AlbumFactory){
-  console.log('here');
-})
-=======
-juke.controller('AlbumCtrl', function ($scope, $http, $rootScope, $log,StatsFactory) {
->>>>>>> e1c137144f95c70cf79a9f4107a740af39eef604
+juke.factory('StatsFactory', function ($q) {
+  var statsObj = {};
+  statsObj.totalTime = function (album) {
+    var audio = document.createElement('audio');
+    return $q(function (resolve, reject) {
+      var sum = 0;
+      var n = 0;
+      function resolveOrRecur () {
+        if (n >= album.songs.length) resolve(sum);
+        else audio.src = album.songs[n++].audioUrl;
+      }
+      audio.addEventListener('loadedmetadata', function () {
+        sum += audio.duration;
+        resolveOrRecur();
+      });
+      resolveOrRecur();
+    });
+  };
+  return statsObj;
+});
 
-
-juke.controller('AlbumCtrl', function ($scope, $http, $rootScope, $log, AlbumFactory) {
+juke.controller('AlbumCtrl', function ($scope, $http, $rootScope, $log, AlbumFactory, StatsFactory) {
   // load our initial data
   $http.get('/api/albums/')
   .then(function (res) { return res.data; })
@@ -76,32 +88,10 @@ juke.controller('AlbumCtrl', function ($scope, $http, $rootScope, $log, AlbumFac
     $scope.albums = albums.data;
   });
 
-  AlbumFactory.fetchById()
+  AlbumFactory.fetchById(2)
   .then(function(album){
     console.log(album.data);
   })
 });
 
-<<<<<<< HEAD
-=======
-juke.factory('StatsFactory', function ($q) {
-  var statsObj = {};
-  statsObj.totalTime = function (album) {
-    var audio = document.createElement('audio');
-    return $q(function (resolve, reject) {
-      var sum = 0;
-      var n = 0;
-      function resolveOrRecur () {
-        if (n >= album.songs.length) resolve(sum);
-        else audio.src = album.songs[n++].audioUrl;
-      }
-      audio.addEventListener('loadedmetadata', function () {
-        sum += audio.duration;
-        resolveOrRecur();
-      });
-      resolveOrRecur();
-    });
-  };
-  return statsObj;
-});
->>>>>>> e1c137144f95c70cf79a9f4107a740af39eef604
+

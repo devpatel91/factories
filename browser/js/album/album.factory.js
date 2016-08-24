@@ -3,8 +3,8 @@ juke.factory('AlbumFactory', function($http){
     fetchAll: function(){
       return $http.get('/api/albums');
     },
-    fetchById: function(){
-      return $http.get('/api/albumId');
+    fetchById: function(id){
+      return $http.get('/api/albums/'  + id);
     }
   }
 
