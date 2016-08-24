@@ -33,10 +33,28 @@ juke.controller('Albums',function($scope,AlbumFactory){
   AlbumFactory.fetchById(2)
   .then(function(album){
   })
+
+    $scope.$on('showAllAlbums', function(){
+      $scope.showMe = true;
+  });
+
+    $scope.$on.('viewSwap', function(event, data){
+      $scope.showMe = (data.name ==== 'allAlbums');
+    })
+
+    $scope.viewOneAlbum = function(){
+      $rootScope.$broadcast('viewSwap', {name: 'oneAlbum'});
+    }
+
 })
 
 
 juke.controller('AlbumCtrl', function ($scope, $http, $rootScope, $log, AlbumFactory, StatsFactory, PlayerFactory) {
+
+  $scope.$on('viewSwap', function(event, data){
+      $scope.showMe = (data.name === 'oneAlbum');
+  }
+  })
   var audio = document.createElement('audio');
   // load our initial data
   $http.get('/api/albums/')
@@ -131,7 +149,16 @@ $scope.currentSong = function(){
       return $scope.play(song,songList);
     }
   };
+
 });
 
+juke.controller('Sidebar', function($scope, $http, $rootScope){
+  $scope.showAllAlbums = function(){
+    $rootScope.$broadcast('showAllAlbums');
+  }
+  $scope.viewOneAlbum = function(){
+    $rootScope.$broadcast('viewSwap', {name: 'oneAlbum'});
+  }
+})
 
 
