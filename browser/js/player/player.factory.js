@@ -7,12 +7,13 @@
 
 juke.factory('PlayerFactory', function($http, $rootScope) {
     var audio = document.createElement('audio');
-    var songPlaying = false, currentSong, currentIndex, playlist, currentTime, progress = 0;
+    var songPlaying = false,
+        currentSong, currentIndex, playlist, currentTime, progress = 0;
 
-    audio.addEventListener('timeupdate', function(){
+    audio.addEventListener('timeupdate', function() {
         progress = audio.currentTime / audio.duration;
         $rootScope.$evalAsync();
-      });
+    });
     var retObj = {
 
         start: function(song, songList) {
@@ -24,7 +25,7 @@ juke.factory('PlayerFactory', function($http, $rootScope) {
             audio.load();
             audio.play();
             currentSong = song;
-            if (songList){
+            if (songList) {
                 playlist = songList;
                 currentIndex = songList.indexOf(song);
             }
@@ -35,22 +36,23 @@ juke.factory('PlayerFactory', function($http, $rootScope) {
             songPlaying = false;
             audio.pause();
         },
-        resume: function(){
-        	audio.play();
-        	songPlaying = true;
+        resume: function() {
+            audio.play();
+            songPlaying = true;
         },
-        isPlaying : function(){
-        	return songPlaying;
+        isPlaying: function() {
+            return songPlaying;
         },
-        getCurrentSong: function(){
+        getCurrentSong: function() {
             if (!currentSong) return null;
-        	return currentSong;
+            return currentSong;
 
         },
-        next: function(){
-            if (currentIndex === playlist.length -1){
+
+        next: function() {
+            if (currentIndex === playlist.length - 1) {
                 currentIndex = 0;
-            }else {
+            } else {
                 currentIndex += 1;
             }
             var nextSong = playlist[currentIndex];
@@ -58,10 +60,10 @@ juke.factory('PlayerFactory', function($http, $rootScope) {
 
         },
 
-        previous: function(){
-            if (currentIndex === 0){
-                currentIndex = playlist.length -1;
-            }else {
+        previous: function() {
+            if (currentIndex === 0) {
+                currentIndex = playlist.length - 1;
+            } else {
                 currentIndex -= 1;
             }
             var nextSong = playlist[currentIndex];
@@ -69,7 +71,7 @@ juke.factory('PlayerFactory', function($http, $rootScope) {
 
         },
 
-        getProgress: function(){
+        getProgress: function() {
             console.log(progress);
             return progress;
         }

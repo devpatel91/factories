@@ -98,30 +98,37 @@ juke.controller('AlbumCtrl', function ($scope, $http, $rootScope, $log, AlbumFac
   function next () { skip(1); }
   function prev () { skip(-1); }
 
-$scope.playing = PlayerFactory.songPlaying;
-$scope.currentSong = PlayerFactory.currentSong;
- $scope.play = function(song){
-   $scope.playing = true;
-  if ($scope.currentSong){
+$scope.playing = function(){
+  return PlayerFactory.songPlaying;
+}
+$scope.currentSong = function(){
+  return PlayerFactory.currentSong;
+}
+ $scope.play = function(song,songList){
+   // $scope.playing() = true;
+  if ($scope.currentSong() === song){
     return PlayerFactory.resume();
+  }else{
+    // $scope.currentSong = song;
+  return PlayerFactory.start(song,songList);
   }
-  $scope.currentSong = song;
-  return PlayerFactory.start(song);
+  
  }
 
  $scope.pause = function(){
-  $scope.playing = false;
+  // $scope.playing() = false;
   return PlayerFactory.pause();
  }
 
-  $scope.toggle = function (song) {
-    console.log()
-    if ($scope.playing) {
-      console.log('true');
+  $scope.toggle = function (song,songList) {
+  PlayerFactory.playlist = songList;
+
+    if ($scope.playing() && song === $scope.currentSong()) {
+
       return $scope.pause();
     } else {
-      console.log('false')
-      return $scope.play(song);
+
+      return $scope.play(song,songList);
     }
   };
 });
