@@ -1,10 +1,21 @@
 'use strict';
-var audio = document.createElement('audio');
-juke.factory('PlayerFactory', function($http) {
-    var songPlaying = false;
+// var progress;
+//   audio.addEventListener('timeupdate', function () {
+//     progress = 100 * audio.currentTime / audio.duration;
+//     // $scope.$digest(); // re-computes current template only (this scope)
+//   });
+
+juke.factory('PlayerFactory', function($http, $rootScope) {
+    var audio = document.createElement('audio');
+    var songPlaying = false, currentSong, currentIndex, playlist, currentTime, progress = 0;
+
+    audio.addEventListener('timeupdate', function(){
+        progress = audio.currentTime / audio.duration;
+        $rootScope.$evalAsync();
+      });
     var retObj = {
 
-        start: function(song) {
+        start: function(song, songList) {
             if (songPlaying) {
                 this.pause();
             }
@@ -12,6 +23,11 @@ juke.factory('PlayerFactory', function($http) {
             audio.load();
             audio.play();
             songPlaying = true;
+            currentSong = song;
+            if (songList){
+                playlist = songList;
+                currentIndex = songList.indexOf(song);
+            }
 
 
         },
@@ -27,14 +43,38 @@ juke.factory('PlayerFactory', function($http) {
         	return songPlaying;
         },
         getCurrentSong: function(){
+            if (!currentSong) return null;
+        	return currentSong;
 
-        	if(songPlaying || !songPlaying){
-        	return  this.song;
-        	}else{
-        		return null;
-        	} 
-        	
+        },
+        next: function(){
+            if (currentIndex === playlist.length -1){
+                currentIndex = 0;
+            }else {
+                currentIndex += 1;
+            }
+            var nextSong = playlist[currentIndex];
+            this.start(nextSong);
+
+        },
+
+        previous: function(){
+            if (currentIndex === 0){
+                currentIndex = playlist.length -1;
+            }else {
+                currentIndex -= 1;
+            }
+            var nextSong = playlist[currentIndex];
+            this.start(nextSong);
+
+        },
+
+        getProgress: function(){
+            console.log(progress);
+            return progress;
         }
+
+
 
 
 
